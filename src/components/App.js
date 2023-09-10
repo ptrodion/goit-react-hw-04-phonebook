@@ -7,19 +7,18 @@ import { ContactForm } from './FormContacts/ContactsForm';
 import { Filter } from './Filter/Filter';
 import { ContactsList } from './ContactsList/ContactsList';
 
-export const App = () => {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts') || [])
-  );
-  const [filter, setFilter] = useState('');
+const getInitialContacts = () => {
+  const savedOurContacts = localStorage.getItem('contacts');
+  if (savedOurContacts !== null) {
+    return JSON.parse(savedOurContacts);
+  } else {
+    return [];
+  }
+};
 
-  // useEffect(() => {
-  //   const savedOurContacts = localStorage.getItem('contacts');
-  //   console.log(savedOurContacts);
-  //   if (savedOurContacts !== null) {
-  //     setContacts(JSON.parse(savedOurContacts));
-  //   }
-  // }, []);
+export const App = () => {
+  const [contacts, setContacts] = useState(getInitialContacts);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
