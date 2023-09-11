@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { nanoid } from 'nanoid';
 
 import { GlobalStyle } from './GlobalStyle';
@@ -49,9 +49,11 @@ export const App = () => {
     );
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toUpperCase().includes(filter.toUpperCase())
-  );
+  const filteredContacts = useMemo(() => {
+    return contacts.filter(contact =>
+      contact.name.toUpperCase().includes(filter.toUpperCase())
+    );
+  }, [contacts, filter]);
 
   return (
     <Layout>
